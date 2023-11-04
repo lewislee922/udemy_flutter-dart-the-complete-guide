@@ -60,30 +60,32 @@ class QuizState extends State<Quiz> {
       final child = result;
       final currentIndex = index;
       result = QuestionFrame(
-          question: questions[index],
-          onPressed: (p0) {
-            answers[currentIndex] = p0;
-            Navigator.of(context).push(PageRouteBuilder(
-                pageBuilder: (context, _, __) =>
-                    child ??
-                    QuizResultFrame(answers: answers, question: questions),
-                transitionsBuilder:
-                    (context, animation, backwardAnimation, child) =>
-                        FadeTransition(
-                          opacity: animation,
-                          child: SlideTransition(
-                            position: backwardAnimation.drive(Tween<Offset>(
-                                begin: const Offset(0, 0),
-                                end: const Offset(-1, 0))),
-                            child: SlideTransition(
-                              position: animation.drive(Tween<Offset>(
-                                  begin: const Offset(1, 0),
-                                  end: const Offset(0, 0))),
-                              child: child,
-                            ),
-                          ),
-                        )));
-          });
+        question: questions[index],
+        onPressed: (p0) {
+          answers[currentIndex] = p0;
+          Navigator.of(context).push(
+            PageRouteBuilder(
+              pageBuilder: (context, _, __) =>
+                  child ??
+                  QuizResultFrame(answers: answers, question: questions),
+              transitionsBuilder:
+                  (context, animation, backwardAnimation, child) =>
+                      FadeTransition(
+                opacity: animation,
+                child: SlideTransition(
+                  position: backwardAnimation.drive(Tween<Offset>(
+                      begin: const Offset(0, 0), end: const Offset(-1, 0))),
+                  child: SlideTransition(
+                    position: animation.drive(Tween<Offset>(
+                        begin: const Offset(1, 0), end: const Offset(0, 0))),
+                    child: child,
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      );
       index -= 1;
     }
     return result!;

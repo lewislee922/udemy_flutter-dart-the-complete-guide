@@ -8,7 +8,7 @@ import '../../models/message_group.dart';
 // abstract class ChatDataService {}
 
 class RealtimeChatDataService {
-  final FirebaseDatabase _instance = FirebaseDatabase.instance;
+  FirebaseDatabase get _instance => FirebaseDatabase.instance;
 
   Future<String> avatorLink(String userId) async {
     final result = await _instance

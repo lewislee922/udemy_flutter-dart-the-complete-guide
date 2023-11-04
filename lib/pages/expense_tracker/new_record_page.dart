@@ -206,22 +206,24 @@ class TextDatePickerState extends State<TextDatePicker> {
 }
 
 class EditCategoryDialog extends ConsumerWidget {
-  ExpenseCategory category;
+  final ExpenseCategory category;
   final String title;
 
-  EditCategoryDialog({super.key, required this.category, String? title})
+  const EditCategoryDialog({super.key, required this.category, String? title})
       : title = title ?? "New Category";
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ExpenseCategory copied =
+        ExpenseCategory(name: category.name, icon: category.icon);
     return StatefulBuilder(builder: (context, newState) {
       return SimpleDialog(
           contentPadding: const EdgeInsets.fromLTRB(24.0, 12.0, 24.0, 16.0),
           title: Text(title),
           children: [
             TextFormField(
-              initialValue: category.name,
-              onChanged: (value) => category.name = value,
+              initialValue: copied.name,
+              onChanged: (value) => copied.name = value,
               decoration: const InputDecoration(label: Text("name")),
             ),
             const SizedBox(
@@ -229,11 +231,11 @@ class EditCategoryDialog extends ConsumerWidget {
             ),
             Row(
               children: [
-                category.icon != 0
+                copied.icon != 0
                     ? Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Icon(IconData(category.icon,
-                            fontFamily: "MaterialIcons")),
+                        child: Icon(
+                            IconData(copied.icon, fontFamily: "MaterialIcons")),
                       )
                     : const SizedBox(),
                 OutlinedButton(
@@ -241,25 +243,27 @@ class EditCategoryDialog extends ConsumerWidget {
                       final newIcon =
                           await FlutterIconPicker.showIconPicker(context);
                       if (newIcon != null) {
-                        category.icon = newIcon.codePoint;
+                        copied.icon = newIcon.codePoint;
                       } else {
-                        category.icon = 0;
+                        copied.icon = 0;
                       }
-                      newState(() => category.icon);
+                      newState(() => copied.icon);
                     },
-                    child: Text(category.icon != 0 ? "replace" : "choose"))
+                    child: Text(copied.icon != 0 ? "replace" : "choose"))
               ],
             ),
             const SizedBox(height: 16),
             Row(
               children: [
                 TextButton(
-                    onPressed: category.name != "" && category.icon != 0
-                        ? () => ref
+                    onPressed: () {
+                      if (copied.name != "" && copied.icon != 0) {
+                        ref
                             .read(expanseDatabase)
-                            .addCategory(category)
-                            .then((value) => Navigator.of(context).pop())
-                        : null,
+                            .addCategory(copied)
+                            .then((_) => Navigator.of(context).pop());
+                      }
+                    },
                     child: const Text("Add")),
                 TextButton(
                     onPressed: () => Navigator.of(context).pop(),

@@ -20,7 +20,8 @@ import '../pages/roll_dice/roll_dice_page.dart';
 
 class AppRouterDelegate extends RouterDelegate<String>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<String> {
-  // 建議不要在get method 裡 create，不然會一直建立NavigatorState，造成動畫定位失誤
+  // NavigatorState 建議不要在get method 裡 create，不然會一直建立新的NavigatorState，造成動畫定位失誤
+  // 可以採用singleton模式或是如下的override由super.init()建立
   @override
   final GlobalKey<NavigatorState> navigatorKey;
 
@@ -203,7 +204,7 @@ class AppRouterDelegate extends RouterDelegate<String>
         if (_newRecord) NewRecord.page(),
         if (_currentPath == 'groceries') Groceries.page(),
         if (_newGroceries) NewGroceries.page(),
-        if (_currentPath == 'yourplaces') YourPlace.page(),
+        if (_currentPath == 'yourplaces' && !_newPlace) YourPlace.page(),
         if (_selectedPlace != null) PlaceDetail.page(_selectedPlace!),
         if (_newPlace) NewPlace.page(),
         if (_currentPath == 'chat') ChatMain.page()

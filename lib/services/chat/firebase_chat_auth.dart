@@ -7,9 +7,7 @@ import 'package:udemy_flutter_dart_the_complete_guide_course_demo/services/share
 import 'chat_auth.dart';
 
 class FirebaseChatAuth implements ChatAuth<User, XFile> {
-  final FirebaseAuth _firebase;
-
-  FirebaseChatAuth() : _firebase = FirebaseAuth.instance;
+  FirebaseAuth get _firebase => FirebaseAuth.instance;
 
   @override
   User? get currentUser => _firebase.currentUser;

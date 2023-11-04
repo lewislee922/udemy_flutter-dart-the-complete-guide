@@ -32,6 +32,7 @@ class NewGroceries extends ConsumerStatefulWidget {
 
   static Page page() => const NewGroceriesPage(
       key: ValueKey('newgroceries'), child: NewGroceries());
+
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => NewGroceriesState();
 }
@@ -59,6 +60,7 @@ class NewGroceriesState extends ConsumerState<NewGroceries> {
     for (var item in _controllers) {
       item.dispose();
     }
+    _formKey.currentState?.dispose();
     super.dispose();
   }
 
@@ -70,7 +72,6 @@ class NewGroceriesState extends ConsumerState<NewGroceries> {
       child: Form(
         key: _formKey,
         child: Column(
-          //mainAxisSize: MainAxisSize.min,
           children: [
             TextFormField(
               validator: (value) => (value == null || value.isEmpty)
@@ -93,39 +94,41 @@ class NewGroceriesState extends ConsumerState<NewGroceries> {
                   ),
                 ),
                 Flexible(
-                    flex: 2,
-                    child: DropdownButton<GroceryCategories?>(
-                        value: _selectedCategory,
-                        items: [
-                          const DropdownMenuItem(
-                            value: null,
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 8.0),
-                              child: Text("Select"),
-                            ),
-                          ),
-                          ...GroceryCategories.values
-                              .map((e) => DropdownMenuItem<GroceryCategories?>(
-                                    value: e,
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 8.0),
-                                      child: Row(
-                                        children: [
-                                          Container(
-                                            height: 20,
-                                            width: 20,
-                                            color: e.color,
-                                          ),
-                                          const SizedBox(width: 10),
-                                          Text(e.name),
-                                        ],
+                  flex: 2,
+                  child: DropdownButton<GroceryCategories?>(
+                    value: _selectedCategory,
+                    items: [
+                      const DropdownMenuItem(
+                        value: null,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Text("Select"),
+                        ),
+                      ),
+                      ...GroceryCategories.values
+                          .map((e) => DropdownMenuItem<GroceryCategories?>(
+                                value: e,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8.0),
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        height: 20,
+                                        width: 20,
+                                        color: e.color,
                                       ),
-                                    ),
-                                  ))
-                        ],
-                        onChanged: (category) =>
-                            setState(() => _selectedCategory = category))),
+                                      const SizedBox(width: 10),
+                                      Text(e.name),
+                                    ],
+                                  ),
+                                ),
+                              ))
+                    ],
+                    onChanged: (category) =>
+                        setState(() => _selectedCategory = category),
+                  ),
+                ),
               ],
             ),
             const SizedBox(height: 16.0),

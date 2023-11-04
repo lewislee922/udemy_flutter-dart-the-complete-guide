@@ -22,35 +22,35 @@ class RollDiceState extends State<RollDice> {
     return MainNavigationBar(
       child: SizedBox.expand(
         child: Container(
-          alignment: Alignment.center,
-          decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                Color.fromARGB(255, 33, 194, 250),
-                Color.fromARGB(255, 147, 28, 245),
-              ])),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                  height: size.height / 2,
-                  width: size.width / 2,
-                  child: Image.asset('assets/images/dices/dice-$_index.png')),
-              TextButton(
-                  onPressed: () =>
-                      setState(() => _index = Random().nextInt(6) + 1),
-                  child: Text(
-                    'Roll Dice!',
-                    style: TextStyle(
-                        fontSize: 24,
-                        color: const Color.fromARGB(255, 33, 194, 250)
-                            .withOpacity(0.6)),
-                  ))
-            ],
-          ),
-        ),
+            alignment: Alignment.center,
+            decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                  Color.fromARGB(255, 33, 194, 250),
+                  Color.fromARGB(255, 147, 28, 245),
+                ])),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                    height: size.height / 2,
+                    width: size.width / 2,
+                    child: Image.asset('assets/images/dices/dice-$_index.png',
+                        gaplessPlayback: true)),
+                TextButton(
+                    onPressed: () =>
+                        setState(() => _index = Random().nextInt(6) + 1),
+                    child: Text(
+                      'Roll Dice!',
+                      style: TextStyle(
+                          fontSize: 24,
+                          color: const Color.fromARGB(255, 33, 194, 250)
+                              .withOpacity(0.6)),
+                    ))
+              ],
+            )),
       ),
     );
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:udemy_flutter_dart_the_complete_guide_course_demo/pages/chat/animated_logo.dart';
 import 'package:udemy_flutter_dart_the_complete_guide_course_demo/pages/chat/user_image_picker.dart';
 import 'package:udemy_flutter_dart_the_complete_guide_course_demo/provider.dart';
 import 'package:udemy_flutter_dart_the_complete_guide_course_demo/services/shared/errors.dart';
@@ -43,12 +44,12 @@ class LoginState extends ConsumerState<Login> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Flexible(
-            child: SizedBox(
-                height: size.width / 2,
-                width: size.width / 2,
-                child: Image.asset('assets/images/chat/main.png')),
-          ),
+          Flexible(child: AnimatedLogo()
+              // SizedBox(
+              //     height: size.width / 2,
+              //     width: size.width / 2,
+              //     child: Image.asset('assets/images/chat/main.png')),
+              ),
           const SizedBox(height: 16),
           Builder(builder: (context) {
             return Padding(
@@ -132,11 +133,10 @@ class LoginState extends ConsumerState<Login> {
                               if (result is bool) {
                               } else if (result is AuthError) {
                                 final error = result;
-                                showDialog(
-                                    context: context,
-                                    builder: (context) => SimpleErrorDialog(
-                                        message: error.message,
-                                        title: "Sign In Error"));
+                                if (context.mounted) {
+                                  _showErrorDialog(
+                                      context, "Sign In Error", error.message);
+                                }
                               }
                             }
                           } else {
@@ -151,11 +151,10 @@ class LoginState extends ConsumerState<Login> {
                                       _textEditingControllers[1].text);
                               if (result is AuthError) {
                                 final error = result;
-                                showDialog(
-                                    context: context,
-                                    builder: (context) => SimpleErrorDialog(
-                                        message: error.message,
-                                        title: "Create user Error"));
+                                if (context.mounted) {
+                                  _showErrorDialog(context, "Create user Error",
+                                      error.message);
+                                }
                               }
                             }
                           }
@@ -192,4 +191,10 @@ class LoginState extends ConsumerState<Login> {
       ),
     );
   }
+
+  _showErrorDialog(BuildContext context, String title, String message) =>
+      showDialog(
+        context: context,
+        builder: (_) => SimpleErrorDialog(message: message, title: title),
+      );
 }

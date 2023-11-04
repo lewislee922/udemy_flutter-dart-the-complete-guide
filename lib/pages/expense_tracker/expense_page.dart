@@ -139,8 +139,7 @@ class CategoryExpenseChart extends ConsumerWidget {
         stream: database.getAllRecord(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            Map<ExpenseCategory, double> result =
-                Map<ExpenseCategory, double>();
+            Map<ExpenseCategory, double> result = {};
             final allCategories =
                 ref.watch(expanseDatabase).getAllCategoriesSync();
             for (var item in allCategories) {

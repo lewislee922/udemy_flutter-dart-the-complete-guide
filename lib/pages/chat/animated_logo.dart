@@ -16,10 +16,10 @@ class AnimatedLogoState extends State<AnimatedLogo>
   void initState() {
     super.initState();
     _controller = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 800));
+        vsync: this, duration: const Duration(milliseconds: 1500));
     _offsetAnimation =
-        Tween<Offset>(begin: const Offset(0, -0.5), end: const Offset(0, 0))
-            .animate(CurveTween(curve: Curves.bounceOut).animate(_controller));
+        Tween<Offset>(begin: const Offset(0, -0.2), end: const Offset(0, 0))
+            .animate(CurveTween(curve: Curves.easeInQuad).animate(_controller));
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         _controller.reverse();

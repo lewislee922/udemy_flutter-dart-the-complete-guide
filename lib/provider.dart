@@ -11,7 +11,8 @@ import 'services/grocery/web_service.dart';
 import 'services/your_places/local_service.dart';
 import 'services/chat/chat_auth.dart';
 
-final appState = Provider<AppRouterDelegate>((ref) => AppRouterDelegate());
+final appState =
+    ChangeNotifierProvider<AppRouterDelegate>((ref) => AppRouterDelegate());
 final expanseDatabase =
     Provider<ExpenseDatabase>((ref) => throw UnimplementedError());
 final groceryWebService =
@@ -61,7 +62,7 @@ class ExpenseDatabase {
     });
   }
 
-  updateCategory(ExpenseCategory category) async {
+  Future<void> updateCategory(ExpenseCategory category) async {
     await _isar
         .writeTxn(() async => await _isar.expanseCategorys.put(category));
   }

@@ -159,7 +159,6 @@ class NewPlaceState extends ConsumerState<NewPlace> {
                                                       location.latitude!,
                                                       location.longitude!))));
                                       _selectedPlace = result;
-                                      setState(() => _selectedPlace);
                                     });
                                   } else {
                                     final result = await Navigator.of(context)
@@ -170,9 +169,16 @@ class NewPlaceState extends ConsumerState<NewPlace> {
                                                     _selectedPlace!
                                                         .longitude))));
                                     _selectedPlace = result;
-                                    setState(() => _selectedPlace);
                                   }
-                                } on UnsupportedError {}
+                                  setState(() => _selectedPlace);
+                                } on UnsupportedError {
+                                  if (context.mounted) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                            content: Text(
+                                                "Can't get location, please check location permission then try again.")));
+                                  }
+                                }
                               },
                               icon: const Icon(Icons.map),
                               label: const Text("Select on map"),

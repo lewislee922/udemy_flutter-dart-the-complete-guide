@@ -81,53 +81,51 @@ class NewGroceriesState extends ConsumerState<NewGroceries> {
               decoration: const InputDecoration(labelText: "Title"),
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Flexible(
                   flex: 3,
                   child: TextFormField(
                     validator: (value) => int.tryParse(value ?? "") == null
-                        ? 'Please type digit currectly'
+                        ? 'Please type digit'
                         : null,
                     controller: _controllers.last,
                     decoration: const InputDecoration(labelText: "Amount"),
                   ),
                 ),
-                Flexible(
-                  flex: 2,
-                  child: DropdownButton<GroceryCategories?>(
-                    value: _selectedCategory,
-                    items: [
-                      const DropdownMenuItem(
-                        value: null,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Text("Select"),
-                        ),
+                SizedBox(width: 10),
+                DropdownButton<GroceryCategories?>(
+                  underline: const SizedBox(),
+                  value: _selectedCategory,
+                  items: [
+                    const DropdownMenuItem(
+                      value: null,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Text("Select"),
                       ),
-                      ...GroceryCategories.values
-                          .map((e) => DropdownMenuItem<GroceryCategories?>(
-                                value: e,
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 8.0),
-                                  child: Row(
-                                    children: [
-                                      Container(
-                                        height: 20,
-                                        width: 20,
-                                        color: e.color,
-                                      ),
-                                      const SizedBox(width: 10),
-                                      Text(e.name),
-                                    ],
-                                  ),
+                    ),
+                    ...GroceryCategories.values
+                        .map((e) => DropdownMenuItem<GroceryCategories?>(
+                              value: e,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      height: 20,
+                                      width: 20,
+                                      color: e.color,
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Text(e.name),
+                                  ],
                                 ),
-                              ))
-                    ],
-                    onChanged: (category) =>
-                        setState(() => _selectedCategory = category),
-                  ),
+                              ),
+                            ))
+                  ],
+                  onChanged: (category) =>
+                      setState(() => _selectedCategory = category),
                 ),
               ],
             ),

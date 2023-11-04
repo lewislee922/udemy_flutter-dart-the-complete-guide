@@ -50,6 +50,10 @@ A Flutter project followed by udemy course practices with some modification.
   <tr>
     <td><img src="screenshot/your_place_main.png" width=270 height=480></td>
     <td><img src="screenshot/your_place_add.png" width=270 height=480></td>
+  </tr>
+</table>
+<table>
+  <tr>
     <td><img src="screenshot/your_place_pick_location.png" width=270 height=480></td>
     <td><img src="screenshot/your_place_detail.png" width=270 height=480></td>
   </tr>
